@@ -1,0 +1,25 @@
+{
+  "name": "voting-hardhat",
+  "version": "1.0.0",
+  "description": "Voting Smart Contract — Hardhat + Ganache + MetaMask UI",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:ganache": "hardhat test --network ganacheCli",
+    "test:coverage": "hardhat coverage",
+    "deploy:local": "hardhat run scripts/deploy.ts --network hardhat",
+    "deploy:ganache": "hardhat run scripts/deploy.ts --network ganache",
+    "deploy:ganacheCli": "hardhat run scripts/deploy.ts --network ganacheCli",
+    "interact:ganache": "hardhat run scripts/interact.ts --network ganache",
+    "node": "hardhat node",
+    "clean": "hardhat clean"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.1.3",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/node": "^20.19.39",
+    "hardhat": "^2.28.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
