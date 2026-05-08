@@ -7,6 +7,7 @@ contract Voting {
         uint id;
         string name;
         uint voteCount;
+        bool active;
     }
 
     // Biến lưu danh sách địa chỉ người đã vote
@@ -38,7 +39,7 @@ contract Voting {
 
     function addCandidate(string memory _name) private {
         candidatesCount++;
-        candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+        candidates[candidatesCount] = Candidate(candidatesCount, _name, 0, true);
         emit CandidateAdded(candidatesCount, _name);
     }
 
@@ -72,6 +73,7 @@ function resetAllVotes() public onlyOwner {
             _candidateId > 0 && _candidateId <= candidatesCount,
             "ID ung cu vien khong hop le!"
         );
+        require(candidates[_candidateId].active, "Ung cu vien da bi xoa!");
         voters[msg.sender] = true;
         candidates[_candidateId].voteCount++;
         voterList.push(msg.sender);
@@ -79,18 +81,23 @@ function resetAllVotes() public onlyOwner {
     }
 
     // Helper: get all candidates at once for Frontend
+    // Dù ứng viên đã bị remove, frontend vẫn nhận về ứng viên đó với tên rỗng
+    // Thêm active để frontend chỉ hiển thị ứng viên có active = true
     function getAllCandidates() public view returns (
         uint[] memory ids,
         string[] memory names,
-        uint[] memory voteCounts
+        uint[] memory voteCounts,
+        bool[] memory actives
     ) {
         ids = new uint[](candidatesCount);
         names = new string[](candidatesCount);
         voteCounts = new uint[](candidatesCount);
+        actives = new bool[](candidatesCount);
         for (uint i = 1; i <= candidatesCount; i++) {
             ids[i - 1] = candidates[i].id;
             names[i - 1] = candidates[i].name;
             voteCounts[i - 1] = candidates[i].voteCount;
+            actives[i - 1] = candidates[i].active;
         }
     }
     // Lấy tổng số lượng cử tri đã tham gia
@@ -104,13 +111,14 @@ function resetAllVotes() public onlyOwner {
     }
 
     // Xóa ứng cử viên (Đặt lại thông tin về rỗng và 0)
+    // Chưa xoá hoàn toán ứng viên khỏi mapping
     function removeCandidate(uint _candidateId) public onlyOwner {
         require(_candidateId > 0 && _candidateId <= candidatesCount, "ID khong hop le");
-        
+        require(candidates[_candidateId].active, "Ung cu vien da bi xoa");
         // Xóa thông tin ứng cử viên
         candidates[_candidateId].name = "";
         candidates[_candidateId].voteCount = 0;
-        
+        candidates[_candidateId].active = false;
         emit CandidateRemoved(_candidateId);
     }
 
