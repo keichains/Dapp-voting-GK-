@@ -34,8 +34,7 @@ describe("Voting Contract", function () {
   // Mỗi test chạy trên contract sạch — không ảnh hưởng lẫn nhau.
   beforeEach(async function () {
     [owner, voter1, voter2, voter3, stranger] = await ethers.getSigners();
-    const VotingFactory = await ethers.getContractFactory("Voting");
-    voting = (await VotingFactory.deploy()) as Voting;
+    voting = await ethers.deployContract("Voting");
     await voting.waitForDeployment();
   });
 
@@ -84,13 +83,15 @@ describe("Voting Contract", function () {
 
     it("2.2 – bỏ phiếu hợp lệ → đánh dấu voter đã bỏ phiếu", async function () {
       await voting.connect(voter1).vote(1);
-      expect(await voting.voters(voter1.address)).to.equal(true);
+      // Sửa voters thành votedRound, người vote ở vòng 1 sẽ có giá trị là 1n
+      expect(await voting.votedRound(voter1.address)).to.equal(1n);
     });
 
     it("2.3 – bỏ phiếu hợp lệ → emit event VotedEvent đúng candidateId", async function () {
       await expect(voting.connect(voter1).vote(1))
         .to.emit(voting, "VotedEvent")
-        .withArgs(1n);
+        // Khớp 3 biến: msg.sender, _candidateId, currentRound
+        .withArgs(voter1.address, 1n, 1n); 
     });
 
     it("2.4 – bỏ phiếu lần 2 → revert 'Ban da bo phieu roi!'", async function () {
@@ -128,7 +129,8 @@ describe("Voting Contract", function () {
     });
 
     it("2.9 – voter chưa bỏ phiếu → voters[address] = false (mặc định)", async function () {
-      expect(await voting.voters(stranger.address)).to.equal(false);
+      // Sửa voters thành votedRound, chưa vote thì bằng 0n
+      expect(await voting.votedRound(stranger.address)).to.equal(0n);
     });
   });
 
