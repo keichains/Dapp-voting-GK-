@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CivicVote - Voting</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1d",
+                        "on-primary-container": "#d4dcff",
+                        "secondary-container": "#d6e0f4",
+                        "on-primary-fixed-variant": "#003dab",
+                        "surface-variant": "#e2e2e4",
+                        "on-secondary-fixed-variant": "#3d4757",
+                        "on-secondary-fixed": "#121c2a",
+                        "on-tertiary-container": "#ffd4c5",
+                        "surface-container-high": "#e8e8ea",
+                        "surface-bright": "#faf9fb",
+                        "secondary-fixed-dim": "#bdc7db",
+                        "outline": "#737686",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e2e2e4",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface-variant": "#434654",
+                        "on-secondary-container": "#596374",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "primary": "#003fb1",
+                        "secondary": "#555f70",
+                        "inverse-surface": "#2f3032",
+                        "on-tertiary": "#ffffff",
+                        "background": "#faf9fb",
+                        "primary-container": "#1a56db",
+                        "inverse-on-surface": "#f1f0f3",
+                        "outline-variant": "#c3c5d7",
+                        "on-primary-fixed": "#00174d",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "tertiary-container": "#ad3b00",
+                        "on-error": "#ffffff",
+                        "surface": "#faf9fb",
+                        "surface-tint": "#1353d8",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1d",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "on-tertiary-fixed": "#380d00",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b5c4ff",
+                        "tertiary": "#852b00",
+                        "surface-container": "#eeedf0",
+                        "secondary-fixed": "#d9e3f7",
+                        "surface-dim": "#dadadc",
+                        "surface-container-low": "#f4f3f5",
+                        "custom-blue": "#1A3FBF",
+                        "custom-border": "#E5E7EB",
+                        "custom-light-blue": "#EEF2FF",
+                        "custom-gray-bg": "#F9FAFB",
+                        "custom-gray-text": "#4B5563"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem",
+                        "card": "12px",
+                        "btn": "8px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "80px",
+                        "lg": "48px",
+                        "sm": "12px",
+                        "gutter": "24px",
+                        "md": "24px",
+                        "container-max": "1120px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Lexend"],
+                        "h3": ["Lexend"],
+                        "h1": ["Lexend"],
+                        "h2": ["Lexend"],
+                        "body-md": ["Lexend"],
+                        "body-lg": ["Lexend"],
+                        "label-sm": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h1": ["36px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Lexend', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-surface-container-lowest border-r border-outline-variant fixed left-0 top-0 h-full w-[220px] flex flex-col py-lg px-md z-20">
+<div class="mb-xl">
+<h1 class="font-h2 text-h2 font-semibold text-primary">C-Vote</h1>
+<p class="font-label-md text-label-md text-secondary mt-1"><br></p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center px-4 py-3 rounded-lg text-primary font-semibold border-r-2 border-primary hover:bg-surface-container-high transition-colors duration-200 opacity-90 transition-opacity duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="how_to_vote">how_to_vote</span>
+<span class="font-label-md text-label-md">Voting</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-label-md text-label-md">Admin</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full py-3 bg-primary text-on-primary rounded-xl font-label-md text-label-md hover:bg-primary-container transition-colors">
+                New Proposal
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[220px] w-[calc(100%-220px)] flex flex-col min-h-screen">
+<!-- TopAppBar (Shared Component modified as per user prompt for header content) -->
+<header class="bg-surface border-b border-outline-variant h-[72px] flex justify-between items-center px-gutter sticky top-0 z-10 w-full">
+<h2 class="text-[24px] font-bold text-custom-blue">Cuộc bầu cử đang diễn ra</h2>
+<div class="flex items-center gap-2 bg-surface-container-lowest border border-custom-border rounded-btn px-4 py-2 shadow-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-md text-label-md font-medium text-on-surface">0x1234...abcd</span>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-[32px] flex-1 max-w-container-max mx-auto w-full">
+<div class="flex gap-[24px] flex-col lg:flex-row">
+<!-- Left Column (65%) -->
+<div class="w-full lg:w-[65%] flex flex-col">
+<!-- Status Card -->
+<div class="bg-surface-container-lowest border border-custom-border rounded-card p-[24px] flex justify-between items-center shadow-sm">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-custom-blue text-[32px]" data-icon="schedule" data-weight="fill" style="font-variation-settings: &quot;FILL&quot; 1;">schedule</span>
+<div class="flex flex-col">
+<h3 class="font-bold text-[18px] text-on-surface">Bầu cử Hội đồng quản trị&nbsp;</h3>
+<p class="text-[14px] text-on-surface-variant mt-1">Trạng thái: <span class="font-bold text-custom-blue">Đang mở</span></p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[12px] text-custom-gray-text uppercase font-semibold">THỜI GIAN CÒN LẠI</span>
+<span class="font-bold text-[28px] text-custom-blue">14:02:09</span>
+</div>
+</div>
+<!-- Candidate List Card -->
+<div class="bg-surface-container-lowest border border-custom-border rounded-card mt-[24px] shadow-sm overflow-hidden">
+<div class="px-[24px] py-[20px] border-b border-custom-border bg-surface-bright">
+<h3 class="font-bold text-[18px] text-on-surface">Danh sách ứng viên</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-[13px] text-custom-gray-text uppercase font-semibold border-b border-custom-border">
+<tr>
+<th class="py-3 px-6 w-[80px]">CHỌN</th>
+<th class="py-3 px-6 w-[80px]">STT</th>
+<th class="py-3 px-6">TÊN ỨNG VIÊN</th>
+<th class="py-3 px-6 text-right">SỐ PHIẾU HIỆN TẠI</th>
+</tr>
+</thead>
+<tbody>
+<!-- Active Row -->
+<tr class="border-b border-custom-border bg-custom-light-blue/20 transition-colors">
+<td class="py-4 px-6 text-center">
+<div class="w-5 h-5 rounded-full border-2 border-custom-blue flex items-center justify-center cursor-pointer">
+<div class="w-2.5 h-2.5 rounded-full bg-custom-blue"></div>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant font-medium">01</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-custom-blue text-white flex items-center justify-center font-bold text-sm shrink-0">
+                                                    NT
+                                                </div>
+<span class="font-semibold text-on-surface text-[15px]">Nguyễn Văn Thành</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right font-medium text-on-surface-variant">998</td>
+</tr>
+<!-- Inactive Rows -->
+<tr class="border-b border-custom-border hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 text-center">
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant cursor-pointer"></div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant font-medium">02</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm shrink-0">TM<br></div>
+<span class="font-medium text-on-surface text-[15px]">Trần Thị Mai</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right font-medium text-on-surface-variant">825</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-6 text-center">
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant cursor-pointer"></div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant font-medium">03</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm shrink-0">LH<br></div>
+<span class="font-medium text-on-surface text-[15px]">Lê Hoàng Hải</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right font-medium text-on-surface-variant">789</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column (35%) -->
+<div class="w-full lg:w-[35%]">
+<!-- Vote Confirmation Card -->
+<div class="bg-surface-container-lowest border border-custom-border rounded-card p-[24px] sticky top-[104px] shadow-sm">
+<h3 class="font-bold text-[18px] text-on-surface mb-[24px]">Xác nhận bỏ phiếu</h3>
+<div class="mb-4">
+<label class="block text-[13px] text-custom-gray-text mb-2 font-medium">Ứng viên đã chọn</label>
+<div class="border border-custom-blue bg-custom-light-blue rounded-btn p-[16px] flex items-center justify-between shadow-inner">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-custom-blue text-white flex items-center justify-center font-bold text-sm shrink-0">
+                                        NT
+                                    </div>
+<div class="flex flex-col">
+<span class="font-bold text-custom-blue text-[15px]">Nguyễn Văn Thành</span>
+<span class="text-[12px] text-custom-gray-text font-medium mt-0.5">STT: 01</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-custom-blue" data-icon="check_circle" data-weight="fill" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+</div>
+</div>
+<div class="mt-[24px] space-y-3 pt-4 border-t border-custom-border">
+<div class="flex justify-between items-center text-[14px]">
+<span class="text-on-surface-variant">Quyền lực biểu quyết</span>
+<span class="font-bold text-on-surface">1.0 CVT</span>
+</div>
+<div class="flex justify-between items-center text-[14px]">
+<span class="text-on-surface-variant">Phí giao dịch (Ước tính)</span>
+<span class="font-bold text-on-surface">~0.001 ETH</span>
+</div>
+</div>
+<div class="mt-[24px] bg-custom-gray-bg border border-custom-border rounded-btn p-[16px] flex gap-3 items-start">
+<span class="material-symbols-outlined text-custom-gray-text text-[20px] shrink-0 mt-0.5" data-icon="info">info</span>
+<p class="text-[13px] text-custom-gray-text leading-relaxed font-medium">
+                                Giao dịch này sẽ được ghi nhận vĩnh viễn trên blockchain. Vui lòng kiểm tra kỹ trước khi xác nhận.
+                            </p>
+</div>
+<button class="w-full mt-[24px] p-[12px] bg-custom-blue hover:bg-opacity-90 text-white rounded-btn font-bold text-[15px] flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98]">Bỏ phiếu
+                            <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+
+
+
+</body></html>
