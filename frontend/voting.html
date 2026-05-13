@@ -6,6 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -117,15 +118,15 @@
 <p class="font-label-md text-label-md text-secondary mt-1"><br></p>
 </div>
 <nav class="flex-1 space-y-2">
-<a class="flex items-center px-4 py-3 rounded-lg text-primary font-semibold border-r-2 border-primary hover:bg-surface-container-high transition-colors duration-200 opacity-90 transition-opacity duration-150" href="#">
+<a class="flex items-center px-4 py-3 rounded-lg text-primary font-semibold border-r-2 border-primary hover:bg-surface-container-high transition-colors duration-200 opacity-90 transition-opacity duration-150" href="voting.html">
 <span class="material-symbols-outlined mr-3" data-icon="how_to_vote">how_to_vote</span>
 <span class="font-label-md text-label-md">Voting</span>
 </a>
-<a class="flex items-center px-4 py-3 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<a class="flex items-center px-4 py-3 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="Dashboard.html">
 <span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
 <span class="font-label-md text-label-md">Dashboard</span>
 </a>
-<a class="flex items-center px-4 py-3 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<a class="flex items-center px-4 py-3 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="admin.html">
 <span class="material-symbols-outlined mr-3" data-icon="admin_panel_settings">admin_panel_settings</span>
 <span class="font-label-md text-label-md">Admin</span>
 </a>
@@ -143,7 +144,8 @@
 <h2 class="text-[24px] font-bold text-custom-blue">Cuộc bầu cử đang diễn ra</h2>
 <div class="flex items-center gap-2 bg-surface-container-lowest border border-custom-border rounded-btn px-4 py-2 shadow-sm">
 <span class="material-symbols-outlined text-secondary" data-icon="account_balance_wallet">account_balance_wallet</span>
-<span class="font-label-md text-label-md font-medium text-on-surface">0x1234...abcd</span>
+<span class="font-label-md text-label-md font-medium text-on-surface"></span>
+<div id="walletAddressDOM" class="px-3 py-1.5 border border-border rounded text-sm text-text-muted font-medium bg-slate-50"></div>
 </div>
 </header>
 <!-- Page Content -->
@@ -157,12 +159,12 @@
 <span class="material-symbols-outlined text-custom-blue text-[32px]" data-icon="schedule" data-weight="fill" style="font-variation-settings: &quot;FILL&quot; 1;">schedule</span>
 <div class="flex flex-col">
 <h3 class="font-bold text-[18px] text-on-surface">Bầu cử Hội đồng quản trị&nbsp;</h3>
-<p class="text-[14px] text-on-surface-variant mt-1">Trạng thái: <span class="font-bold text-custom-blue">Đang mở</span></p>
+<p class="text-[14px] text-on-surface-variant mt-1">Trạng thái: <span id="votingStatusDOM" class="font-bold text-custom-blue">Đang mở</span></p>
 </div>
 </div>
 <div class="flex flex-col items-end">
 <span class="text-[12px] text-custom-gray-text uppercase font-semibold">THỜI GIAN CÒN LẠI</span>
-<span class="font-bold text-[28px] text-custom-blue">14:02:09</span>
+<span id="countdownDOM" class="font-bold text-[28px] text-custom-blue">14:02:09</span>
 </div>
 </div>
 <!-- Candidate List Card -->
@@ -180,52 +182,8 @@
 <th class="py-3 px-6 text-right">SỐ PHIẾU HIỆN TẠI</th>
 </tr>
 </thead>
-<tbody>
-<!-- Active Row -->
-<tr class="border-b border-custom-border bg-custom-light-blue/20 transition-colors">
-<td class="py-4 px-6 text-center">
-<div class="w-5 h-5 rounded-full border-2 border-custom-blue flex items-center justify-center cursor-pointer">
-<div class="w-2.5 h-2.5 rounded-full bg-custom-blue"></div>
-</div>
-</td>
-<td class="py-4 px-6 text-on-surface-variant font-medium">01</td>
-<td class="py-4 px-6">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-custom-blue text-white flex items-center justify-center font-bold text-sm shrink-0">
-                                                    NT
-                                                </div>
-<span class="font-semibold text-on-surface text-[15px]">Nguyễn Văn Thành</span>
-</div>
-</td>
-<td class="py-4 px-6 text-right font-medium text-on-surface-variant">998</td>
-</tr>
-<!-- Inactive Rows -->
-<tr class="border-b border-custom-border hover:bg-surface-container-low transition-colors">
-<td class="py-4 px-6 text-center">
-<div class="w-5 h-5 rounded-full border-2 border-outline-variant cursor-pointer"></div>
-</td>
-<td class="py-4 px-6 text-on-surface-variant font-medium">02</td>
-<td class="py-4 px-6">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm shrink-0">TM<br></div>
-<span class="font-medium text-on-surface text-[15px]">Trần Thị Mai</span>
-</div>
-</td>
-<td class="py-4 px-6 text-right font-medium text-on-surface-variant">825</td>
-</tr>
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="py-4 px-6 text-center">
-<div class="w-5 h-5 rounded-full border-2 border-outline-variant cursor-pointer"></div>
-</td>
-<td class="py-4 px-6 text-on-surface-variant font-medium">03</td>
-<td class="py-4 px-6">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm shrink-0">LH<br></div>
-<span class="font-medium text-on-surface text-[15px]">Lê Hoàng Hải</span>
-</div>
-</td>
-<td class="py-4 px-6 text-right font-medium text-on-surface-variant">789</td>
-</tr>
+<tbody id="candidateListDOM">
+
 </tbody>
 </table>
 </div>
@@ -238,17 +196,30 @@
 <h3 class="font-bold text-[18px] text-on-surface mb-[24px]">Xác nhận bỏ phiếu</h3>
 <div class="mb-4">
 <label class="block text-[13px] text-custom-gray-text mb-2 font-medium">Ứng viên đã chọn</label>
-<div class="border border-custom-blue bg-custom-light-blue rounded-btn p-[16px] flex items-center justify-between shadow-inner">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-custom-blue text-white flex items-center justify-center font-bold text-sm shrink-0">
-                                        NT
-                                    </div>
-<div class="flex flex-col">
-<span class="font-bold text-custom-blue text-[15px]">Nguyễn Văn Thành</span>
-<span class="text-[12px] text-custom-gray-text font-medium mt-0.5">STT: 01</span>
-</div>
-</div>
-<span class="material-symbols-outlined text-custom-blue" data-icon="check_circle" data-weight="fill" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<div id="selectedCandidateBox"
+     class="border border-custom-blue bg-custom-light-blue rounded-btn p-[16px] flex items-center justify-between shadow-inner">
+    <div class="flex items-center gap-3">
+        <div id="selectedCandidateAvatar"
+             class="w-10 h-10 rounded-full bg-custom-blue text-white flex items-center justify-center font-bold text-sm shrink-0">
+            --
+        </div>
+        <div class="flex flex-col">
+            <span id="selectedCandidateName"
+                  class="font-bold text-custom-blue text-[15px]">
+                Chưa chọn ứng viên
+            </span>
+            <span id="selectedCandidateId"
+                  class="text-[12px] text-custom-gray-text font-medium mt-0.5">
+                STT: --
+            </span>
+        </div>
+    </div>
+    <span class="material-symbols-outlined text-custom-blue"
+          data-icon="check_circle"
+          data-weight="fill"
+          style="font-variation-settings: &quot;FILL&quot; 1;">
+        check_circle
+    </span>
 </div>
 </div>
 <div class="mt-[24px] space-y-3 pt-4 border-t border-custom-border">
@@ -267,7 +238,7 @@
                                 Giao dịch này sẽ được ghi nhận vĩnh viễn trên blockchain. Vui lòng kiểm tra kỹ trước khi xác nhận.
                             </p>
 </div>
-<button class="w-full mt-[24px] p-[12px] bg-custom-blue hover:bg-opacity-90 text-white rounded-btn font-bold text-[15px] flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98]">Bỏ phiếu
+<button id="btnVote" class="w-full mt-[24px] p-[12px] bg-custom-blue hover:bg-opacity-90 text-white rounded-btn font-bold text-[15px] flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98]">Bỏ phiếu
                             <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
 </button>
 </div>
@@ -278,5 +249,250 @@
 
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script src="app.js"></script>
+<script>
+    let selectedCandidateId = null;
+    let selectedCandidateName = "";
 
-</body></html>
+    window.addEventListener('load', async () => {
+        const isConnected = await initWeb3();
+
+        if (!isConnected) {
+            console.log("Vui lòng kết nối ví!");
+            return;
+        }
+
+        console.log("Đã kết nối ví thành công trên trang Voting!");
+
+        await loadVotingCandidates();
+        await updateVotingTimeStatus();
+        setupVoteButton();
+        setupVotingEvents();
+    });
+
+    async function loadVotingCandidates() {
+        try {
+            const [ids, names, voteCounts] = await contract.getAllCandidates();
+
+            const tbody = document.getElementById("candidateListDOM");
+            tbody.innerHTML = "";
+
+            let hasCandidate = false;
+
+            for (let i = 0; i < ids.length; i++) {
+                const id = Number(ids[i]);
+                const name = names[i];
+                const voteCount = Number(voteCounts[i]);
+
+                if (!name || name.trim() === "") {
+                    continue;
+                }
+
+                hasCandidate = true;
+
+                const tr = document.createElement("tr");
+                tr.className = "border-b border-custom-border hover:bg-custom-light-blue cursor-pointer transition-colors";
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6">
+                        <input
+                            type="radio"
+                            name="candidate"
+                            value="${id}"
+                            class="candidate-radio text-custom-blue focus:ring-custom-blue"
+                        >
+                    </td>
+                    <td class="py-4 px-6 font-medium text-on-surface">${id}</td>
+                    <td class="py-4 px-6 font-bold text-on-surface">${name}</td>
+                    <td class="py-4 px-6 text-right font-medium text-on-surface">${voteCount}</td>
+                `;
+
+                tr.addEventListener("click", () => {
+                    selectCandidate(id, name, tr);
+                });
+
+                tbody.appendChild(tr);
+            }
+
+            if (!hasCandidate) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="py-6 px-6 text-center text-custom-gray-text">
+                            Chưa có ứng viên nào. Vui lòng thêm ứng viên trong trang Admin.
+                        </td>
+                    </tr>
+                `;
+            }
+        } catch (err) {
+            console.error("Lỗi khi tải danh sách ứng viên:", err);
+            alert("Không thể tải danh sách ứng viên từ contract.");
+        }
+    }
+
+    function selectCandidate(candidateId, candidateName, selectedRow) {
+        selectedCandidateId = candidateId;
+        selectedCandidateName = candidateName;
+
+        document.querySelectorAll("#candidateListDOM tr").forEach(row => {
+            row.classList.remove("bg-custom-light-blue");
+        });
+
+        selectedRow.classList.add("bg-custom-light-blue");
+
+        const radio = selectedRow.querySelector("input[type='radio']");
+        if (radio) {
+            radio.checked = true;
+        }
+
+        document.getElementById("selectedCandidateName").innerText = candidateName;
+        document.getElementById("selectedCandidateId").innerText = `STT: ${candidateId}`;
+        document.getElementById("selectedCandidateAvatar").innerText = getInitials(candidateName);
+    }
+
+    function getInitials(name) {
+        return name
+            .trim()
+            .split(/\s+/)
+            .map(word => word[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase();
+    }
+
+    function setupVoteButton() {
+        const voteBtn = document.getElementById("btnVote");
+
+        voteBtn.addEventListener("click", async () => {
+            if (!selectedCandidateId) {
+                alert("Vui lòng chọn ứng viên trước khi bỏ phiếu!");
+                return;
+            }
+
+            try {
+                const confirmVote = confirm(`Bạn chắc chắn muốn bỏ phiếu cho "${selectedCandidateName}"?`);
+                if (!confirmVote) return;
+
+                voteBtn.disabled = true;
+                voteBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+                const tx = await contract.vote(selectedCandidateId);
+                alert("Giao dịch đang được gửi. Vui lòng xác nhận trên MetaMask.");
+
+                await tx.wait();
+
+                alert("Bỏ phiếu thành công!");
+
+                await loadVotingCandidates();
+                selectedCandidateId = null;
+                selectedCandidateName = "";
+
+                document.getElementById("selectedCandidateName").innerText = "Chưa chọn ứng viên";
+                document.getElementById("selectedCandidateId").innerText = "STT: --";
+                document.getElementById("selectedCandidateAvatar").innerText = "--";
+
+                await updateVotingTimeStatus();
+            } catch (err) {
+                console.error("Lỗi khi bỏ phiếu:", err);
+                alert("Bỏ phiếu thất bại. Có thể bạn đã vote rồi, bầu cử chưa mở, hoặc giao dịch bị từ chối.");
+                await updateVotingTimeStatus();
+            }
+        });
+    }
+
+    function setupVotingEvents() {
+        if (!contract) return;
+
+        contract.on("VotedEvent", async () => {
+            await loadVotingCandidates();
+        });
+
+        contract.on("CandidateAdded", async () => {
+            await loadVotingCandidates();
+        });
+
+        contract.on("CandidateRemoved", async () => {
+            await loadVotingCandidates();
+        });
+
+        contract.on("VotingTimeUpdated", async () => {
+            await updateVotingTimeStatus();
+        });
+
+        contract.on("VotingToggled", async () => {
+            await updateVotingTimeStatus();
+        });
+    }
+
+    async function updateVotingTimeStatus() {
+        if (!contract) return;
+
+        try {
+            const start = await contract.startTime();
+            const end = await contract.endTime();
+            const open = await contract.votingOpen();
+
+            const startMs = Number(start) * 1000;
+            const endMs = Number(end) * 1000;
+            const now = Date.now();
+
+            const statusDOM = document.getElementById("votingStatusDOM");
+            const countdownDOM = document.getElementById("countdownDOM");
+            const voteBtn = document.getElementById("btnVote");
+
+            if (!open) {
+                statusDOM.innerText = "Đã tạm đóng";
+                countdownDOM.innerText = "--:--:--";
+                disableVoteButton(voteBtn);
+                setTimeout(updateVotingTimeStatus, 1000);
+                return;
+            }
+
+            if (now < startMs) {
+                statusDOM.innerText = "Chưa mở bầu cử";
+                countdownDOM.innerText = formatCountdown(startMs - now);
+                disableVoteButton(voteBtn);
+            } else if (now > endMs) {
+                statusDOM.innerText = "Đã kết thúc bầu cử";
+                countdownDOM.innerText = "00:00:00";
+                disableVoteButton(voteBtn);
+            } else {
+                statusDOM.innerText = "Đang mở";
+                countdownDOM.innerText = formatCountdown(endMs - now);
+                enableVoteButton(voteBtn);
+            }
+
+            setTimeout(updateVotingTimeStatus, 1000);
+        } catch (err) {
+            console.error("Lỗi khi cập nhật trạng thái thời gian:", err);
+        }
+    }
+
+    function disableVoteButton(btn) {
+        if (!btn) return;
+        btn.disabled = true;
+        btn.classList.add("opacity-50", "cursor-not-allowed");
+    }
+
+    function enableVoteButton(btn) {
+        if (!btn) return;
+        btn.disabled = false;
+        btn.classList.remove("opacity-50", "cursor-not-allowed");
+    }
+
+    function formatCountdown(ms) {
+        const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        return [
+            String(hours).padStart(2, "0"),
+            String(minutes).padStart(2, "0"),
+            String(seconds).padStart(2, "0")
+        ].join(":");
+    }
+</script>
+</body>
+</html>
