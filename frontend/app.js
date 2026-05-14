@@ -1,5 +1,5 @@
 // 1. Thay bằng địa chỉ Contract của bạn sau khi deploy (npx hardhat run scripts/deploy.js --network localhost)
-const CONTRACT_ADDRESS = "0xE47A68ca6a905e6B6191190538461112bC7683F9";
+const CONTRACT_ADDRESS = "0x8903d87d59c75F86603af29b80D5D40CAD065E27";
 
 // 2. ABI cơ bản để gọi hàm
 const CONTRACT_ABI = [

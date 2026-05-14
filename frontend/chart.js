@@ -19,16 +19,6 @@ function getColor(index) {
     return DASHBOARD_COLORS[index % DASHBOARD_COLORS.length];
 }
 
-function shortName(name) {
-    return name
-        .trim()
-        .split(/\s+/)
-        .map(word => word[0])
-        .join("")
-        .slice(0, 4)
-        .toUpperCase();
-}
-
 function formatAddress(address) {
     if (!address) return "Unknown";
     return address.substring(0, 6) + "..." + address.substring(address.length - 4);
@@ -94,7 +84,7 @@ const centerTextPlugin = {
 
 function initCharts(candidates, total) {
     const labels = candidates.map(c => c.name);
-    const shortLabels = candidates.map(c => shortName(c.name));
+    const shortLabels = candidates.map(c => `ID: ${c.id}`);
     const votes = candidates.map(c => c.votes);
     const colors = candidates.map((_, index) => getColor(index));
 
@@ -175,7 +165,7 @@ function initCharts(candidates, total) {
 
 function updateCharts(candidates, total) {
     const labels = candidates.map(c => c.name);
-    const shortLabels = candidates.map(c => shortName(c.name));
+    const shortLabels = candidates.map(c => `ID: ${c.id}`);
     const votes = candidates.map(c => c.votes);
     const colors = candidates.map((_, index) => getColor(index));
 
