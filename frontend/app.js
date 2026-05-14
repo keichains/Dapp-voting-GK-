@@ -30,46 +30,33 @@ let currentAccount = null;
 
 // Hàm kiểm tra và khởi tạo kết nối (Gọi ở mọi trang)
 async function initWeb3() {
-    if (typeof window.ethereum === 'undefined') {
-        alert("Vui lòng cài đặt MetaMask!");
-        return false;
-    }
+    if (typeof window.ethereum !== 'undefined') {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
 
-    try {
-        // 1. Xin quyền truy cập account
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        if (accounts.length === 0) return false;
+        if (accounts.length > 0) {
+            currentAccount = accounts[0];
 
-        // 2. Kiểm tra đúng network Sepolia chưa
-        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-
-        if (chainId !== SEPOLIA_CHAIN_ID) {
-            try {
-                // Tự động yêu cầu switch sang Sepolia
-                await window.ethereum.request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: SEPOLIA_CHAIN_ID }],
-                });
-            } catch (switchError) {
-                // Nếu ví chưa có Sepolia thì tự thêm vào
-                if (switchError.code === 4902) {
-                    await window.ethereum.request({
-                        method: 'wallet_addEthereumChain',
-                        params: [{
-                            chainId: SEPOLIA_CHAIN_ID,
-                            chainName: 'Sepolia Testnet',
-                            nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-                            rpcUrls: ['https://rpc.sepolia.org'],
-                            blockExplorerUrls: ['https://sepolia.etherscan.io']
-                        }]
-                    });
-                } else {
-                    alert("Vui lòng chuyển sang mạng Sepolia trong MetaMask!");
-                    return false;
-                }
+            // 1. CẬP NHẬT HIỂN THỊ ĐỊA CHỈ VÍ TRÊN HTML
+            const walletDOM = document.getElementById('walletAddressDOM');
+            if (walletDOM) {
+                // Rút gọn ví thật
+                walletDOM.innerText = currentAccount.substring(0, 6) + '...' + currentAccount.substring(38);
             }
-        }
+            // 2. ẨN NÚT "CONNECT WALLET" ĐI KHI ĐÃ ĐĂNG NHẬP
+            const connectBtn = document.getElementById('connectWalletBtnDOM');
+            if (connectBtn) {
+                connectBtn.style.display = 'none';
+            }
+            // Khởi tạo Ethers v6
+            provider = new ethers.BrowserProvider(window.ethereum);
+            signer = await provider.getSigner();
+            contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
+            return true;
+        }
+    }
+    return false;
+}
         // 3. Khởi tạo sau khi đã đúng network
         currentAccount = accounts[0];
 
