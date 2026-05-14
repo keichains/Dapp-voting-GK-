@@ -1,6 +1,5 @@
 // 1. Thay bằng địa chỉ Contract của bạn sau khi deploy (npx hardhat run scripts/deploy.js --network localhost)
 const CONTRACT_ADDRESS = "0xE47A68ca6a905e6B6191190538461112bC7683F9";
-const SEPOLIA_CHAIN_ID = "0xaa36a7";
 // 2. ABI cơ bản để gọi hàm
 const CONTRACT_ABI = [
     "function getAllCandidates() public view returns (uint[], string[], uint[], bool[])",
