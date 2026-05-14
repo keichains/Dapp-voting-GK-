@@ -1,6 +1,6 @@
 // 1. Thay bằng địa chỉ Contract của bạn sau khi deploy (npx hardhat run scripts/deploy.js --network localhost)
 const CONTRACT_ADDRESS = "0xE47A68ca6a905e6B6191190538461112bC7683F9";
-
+const SEPOLIA_CHAIN_ID = "0xaa36a7";
 // 2. ABI cơ bản để gọi hàm
 const CONTRACT_ABI = [
     "function getAllCandidates() public view returns (uint[], string[], uint[], bool[])",
@@ -29,35 +29,71 @@ let contract;
 let currentAccount = null;
 
 // Hàm kiểm tra và khởi tạo kết nối (Gọi ở mọi trang)
+const CONTRACT_ADDRESS = "0xE47A68ca6a905e6B6191190538461112bC7683F9";
+const SEPOLIA_CHAIN_ID = "0xaa36a7"; // 11155111 ở dạng hex
+
 async function initWeb3() {
-    if (typeof window.ethereum !== 'undefined') {
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-        
-        if (accounts.length > 0) {
-            currentAccount = accounts[0];
-            
-            // 1. CẬP NHẬT HIỂN THỊ ĐỊA CHỈ VÍ TRÊN HTML
-            const walletDOM = document.getElementById('walletAddressDOM');
-            if (walletDOM) {
-                // Rút gọn ví thật
-                walletDOM.innerText = currentAccount.substring(0, 6) + '...' + currentAccount.substring(38);
-            }
-
-            // 2. ẨN NÚT "CONNECT WALLET" ĐI KHI ĐÃ ĐĂNG NHẬP
-            const connectBtn = document.getElementById('connectWalletBtnDOM');
-            if (connectBtn) {
-                connectBtn.style.display = 'none';
-            }
-
-            // Khởi tạo Ethers v6
-            provider = new ethers.BrowserProvider(window.ethereum);
-            signer = await provider.getSigner();
-            contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-            
-            return true;
-        }
+    if (typeof window.ethereum === 'undefined') {
+        alert("Vui lòng cài đặt MetaMask!");
+        return false;
     }
-    return false;
+
+    try {
+        // 1. Xin quyền truy cập account
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        if (accounts.length === 0) return false;
+
+        // 2. ✅ Kiểm tra đúng network Sepolia chưa
+        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+
+        if (chainId !== SEPOLIA_CHAIN_ID) {
+            try {
+                // Tự động yêu cầu switch sang Sepolia
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: SEPOLIA_CHAIN_ID }],
+                });
+            } catch (switchError) {
+                // Nếu ví chưa có Sepolia thì tự thêm vào
+                if (switchError.code === 4902) {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: SEPOLIA_CHAIN_ID,
+                            chainName: 'Sepolia Testnet',
+                            nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+                            rpcUrls: ['https://rpc.sepolia.org'],
+                            blockExplorerUrls: ['https://sepolia.etherscan.io']
+                        }]
+                    });
+                } else {
+                    alert("Vui lòng chuyển sang mạng Sepolia trong MetaMask!");
+                    return false;
+                }
+            }
+        }
+
+        // 3. Khởi tạo sau khi đã đúng network
+        currentAccount = accounts[0];
+
+        const walletDOM = document.getElementById('walletAddressDOM');
+        if (walletDOM) {
+            walletDOM.innerText = currentAccount.substring(0, 6) + '...' + currentAccount.substring(38);
+        }
+
+        const connectBtn = document.getElementById('connectWalletBtnDOM');
+        if (connectBtn) connectBtn.style.display = 'none';
+
+        provider = new ethers.BrowserProvider(window.ethereum);
+        signer = await provider.getSigner();
+        contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+        return true;
+
+    } catch (error) {
+        console.error("Lỗi kết nối ví:", error);
+        return false;
+    }
 }
 // Gắn sự kiện click cho nút Connect Wallet (nếu nó tồn tại trên trang)
 document.addEventListener("DOMContentLoaded", () => {
