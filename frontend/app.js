@@ -30,39 +30,34 @@ let currentAccount = null;
 
 // Hàm kiểm tra và khởi tạo kết nối (Gọi ở mọi trang)
 async function initWeb3() {
-    if (typeof window.ethereum === 'undefined') {
-        alert("Vui lòng cài đặt MetaMask!");
-        return false;
-    }
+    if (typeof window.ethereum !== 'undefined') {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        
+        if (accounts.length > 0) {
+            currentAccount = accounts[0];
+            
+            // 1. CẬP NHẬT HIỂN THỊ ĐỊA CHỈ VÍ TRÊN HTML
+            const walletDOM = document.getElementById('walletAddressDOM');
+            if (walletDOM) {
+                // Rút gọn ví thật
+                walletDOM.innerText = currentAccount.substring(0, 6) + '...' + currentAccount.substring(38);
+            }
 
-    try {
-        // ✅ Đổi eth_accounts → eth_requestAccounts
-        // Tự động hỏi xin quyền nếu ví chưa kết nối
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            // 2. ẨN NÚT "CONNECT WALLET" ĐI KHI ĐÃ ĐĂNG NHẬP
+            const connectBtn = document.getElementById('connectWalletBtnDOM');
+            if (connectBtn) {
+                connectBtn.style.display = 'none';
+            }
 
-        if (accounts.length === 0) return false;
-
-        currentAccount = accounts[0];
-
-        const walletDOM = document.getElementById('walletAddressDOM');
-        if (walletDOM) {
-            walletDOM.innerText = currentAccount.substring(0, 6) + '...' + currentAccount.substring(38);
+            // Khởi tạo Ethers v6
+            provider = new ethers.BrowserProvider(window.ethereum);
+            signer = await provider.getSigner();
+            contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+            
+            return true;
         }
-
-        const connectBtn = document.getElementById('connectWalletBtnDOM');
-        if (connectBtn) connectBtn.style.display = 'none';
-
-        provider = new ethers.BrowserProvider(window.ethereum);
-        signer = await provider.getSigner();
-        contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-
-        return true;
-
-    } catch (error) {
-        // Người dùng bấm từ chối kết nối
-        console.error("Người dùng từ chối kết nối ví:", error);
-        return false;
     }
+    return false;
 }
 // Gắn sự kiện click cho nút Connect Wallet (nếu nó tồn tại trên trang)
 document.addEventListener("DOMContentLoaded", () => {
