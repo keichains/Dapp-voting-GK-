@@ -29,9 +29,6 @@ let contract;
 let currentAccount = null;
 
 // Hàm kiểm tra và khởi tạo kết nối (Gọi ở mọi trang)
-const CONTRACT_ADDRESS = "0xE47A68ca6a905e6B6191190538461112bC7683F9";
-const SEPOLIA_CHAIN_ID = "0xaa36a7"; // 11155111 ở dạng hex
-
 async function initWeb3() {
     if (typeof window.ethereum === 'undefined') {
         alert("Vui lòng cài đặt MetaMask!");
@@ -43,7 +40,7 @@ async function initWeb3() {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         if (accounts.length === 0) return false;
 
-        // 2. ✅ Kiểm tra đúng network Sepolia chưa
+        // 2. Kiểm tra đúng network Sepolia chưa
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
 
         if (chainId !== SEPOLIA_CHAIN_ID) {
